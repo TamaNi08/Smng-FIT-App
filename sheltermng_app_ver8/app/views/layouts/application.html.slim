@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title
+      | SheltervisApp 
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      .navbar-brand Sheltervis_app 
+      ul.navbar-nav.ml-auto
+        - if admin_user_signed_in?
+          nav-item= link_to '避難所一覧', shelters_path, class: 'nav-link'
+          nav-item= link_to '避難者管理画面', users_path, class: 'nav-link'
+          nav-item= link_to '避難者新規登録',  new_user_path, class: 'nav-link'
+          = link_to 'ログアウト', destroy_admin_user_session_path, method: :delete, class:'btn btn-success'
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+      = yield
